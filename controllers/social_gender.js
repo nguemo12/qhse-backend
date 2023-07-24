@@ -1,0 +1,65 @@
+const dotenv = require('dotenv');
+const axios = require('axios');
+const qhse_calculations = require('./../helpers/qhse_calculations.js');
+
+// Get config vars
+dotenv.config();
+
+module.exports = function (req){
+    let indicators = [
+        {
+            code : 'SG.GEN.PARL.ZS',
+            value : null,
+            name : '',
+            norm : null,
+            weight : 1.6,
+            prescoring : null
+        },
+        {
+            code : 'SL.TLF.CACT.FM.ZS',
+            value : null,
+            norm : null,
+            name : '',
+            weight : 1.6,
+            prescoring : null
+        },
+        {
+            code : 'SE.ENR.PRSC.FM.ZS',
+            value : null,
+            norm : null,
+            weight : 1.6,
+            name : '',
+            prescoring : null
+        },
+        {
+            code : 'SP.UWT.TFRT',
+            value : null,
+            norm : null,
+            weight : 1.6,
+            name : '',
+            prescoring : null
+        }
+    ];
+    return new Promise((resolve,rejected)=>{
+
+        if(req.query.date !== 'undefined' && req.query.country !== 'undefined'){
+            let link_env = `http://api.worldbank.org/v2/country/${req.query.country}/indicator/SP.UWT.TFRT;SE.ENR.PRSC.FM.ZS;SL.TLF.CACT.FM.ZS;SG.GEN.PARL.ZS?format=json&source=75&date=2000:${req.query.date}`;
+            axios.get(link_env)
+            .then(response => {
+                let data = response.data;
+                    
+                    resolve({code:200,message:qhse_calculations(response.data[1],req.query.date,indicators)});
+            })
+            .catch(error => {
+                resolve({code:400,message:error});
+            });
+        }else{
+            resolve({code:400,message:'Please enter all parameters'});
+        }
+        //
+        //
+        //
+        
+        
+    });
+}
