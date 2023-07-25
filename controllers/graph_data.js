@@ -8,7 +8,7 @@ dotenv.config();
 async function getCountryList(){
     const res = await axios.get('http://api.worldbank.org/v2/country?format=json')
     const data = await res.data
-    console.log(data)
+   
     return data[1];
 }
 
