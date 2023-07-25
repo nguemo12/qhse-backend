@@ -6,7 +6,7 @@ const qhse_calculations = require('./../helpers/qhse_calculations.js');
 dotenv.config();
 
 async function getCountryList(){
-    const res = await fetch('http://api.worldbank.org/v2/country?format=json')
+    const res = await axios.get('http://api.worldbank.org/v2/country?format=json')
     const data = await res.json()
     console.log(data)
     return data[1];
