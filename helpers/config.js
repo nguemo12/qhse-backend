@@ -5,5 +5,5 @@ const config={
 }
 
 module.exports={
-     CHAT_GPT_API_KEY : process.env.API_KEY
+     config
 }

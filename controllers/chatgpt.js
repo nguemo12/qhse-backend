@@ -9,7 +9,7 @@ module.exports = function (req){
     return new Promise(async(resolve,rejected)=>{
        
         const configuration = new Configuration({
-            apiKey: "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",
+            apiKey: config.CHAT_GPT_API_KEY,
         });
 
           const openai = new OpenAIApi(configuration);
